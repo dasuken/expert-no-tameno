@@ -31,14 +31,22 @@ func main() {
 
 	for _, s := range ss {
 		fmt.Println(IsHelloWorld(s))
+
+		Seek(s)
+
+		fmt.Println(IsHelloWorld(s))
 	}
 
 	//　シークの挙動
 	// io.Reader型の値はSeekによって動いてしまう
 }
 
-func Factory() []io.Reader {
-	return []io.Reader{
+func Seek(rs io.ReadSeeker) (int64, error){
+	return rs.Seek(0, io.SeekStart)
+}
+
+func Factory() []io.ReadSeeker {
+	return []io.ReadSeeker{
 		strings.NewReader("hello world"),
 		strings.NewReader("hello"),
 		strings.NewReader("world"),
