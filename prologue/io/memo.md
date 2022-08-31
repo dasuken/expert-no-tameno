@@ -59,6 +59,13 @@ func pipe2(v User) {
     * `embed.FS`形はfs.FS型を実装しているため、バイナリに埋め込まれたデータをファイルとして扱うことができる。これが`go:embed`らしい
         * そういえば試してなかった。渋川さんがなんか作ってた気がする。チェックしてみる
   
+
+* go:embed
+    * 参考文献　https://future-architect.github.io/articles/20210208/
+    * 単一ファイルの場合
+        * `_ embed`でimportするのが慣しらしい
+        * `//go:embed filename`
+
 ## skipした項目
 * walk
 * tmp file
