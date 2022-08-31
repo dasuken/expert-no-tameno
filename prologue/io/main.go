@@ -2,8 +2,10 @@ package main
 
 import (
 	"bytes"
+	"crypto/sha256"
 	"fmt"
 	"io"
+	"os"
 	"strings"
 )
 
@@ -37,8 +39,20 @@ func main() {
 		fmt.Println(IsHelloWorld(s))
 	}
 
-	//　シークの挙動
-	// io.Reader型の値はSeekによって動いてしまう
+	// MultiWriter
+	// hash fileに同時に hello worldを書き込んでみる
+	// 結果はh.Sum(nil)
+
+
+}
+
+func SampleMW() {
+	f, _ := os.Create("sample.txt")
+	h := sha256.New()
+	w := io.MultiWriter(f, h)
+	w.Write([]byte("hello world"))
+
+	fmt.Printf("%x", h.Sum(nil))
 }
 
 func Seek(rs io.ReadSeeker) (int64, error){
@@ -63,3 +77,15 @@ func IsHelloWorld(r io.Reader) (bool, error) {
 
 	return bytes.Equal(buf, expected), nil
 }
+
+// repl
+// `package main;import"fmt"; func main(){%s;fmt.Println(%s)}`
+
+// io/fs
+// fs.File構造体にはos.Fileと異なり、読み取り専用メソッドしか定義されていない
+// os.FileInfoのエイリアスとしてfs.FileInfoが定義されている(あー確かにos.FileとFileInfoの扱いややこしかったかも)
+// ? go:embed? そういえば調べて見たかったもの
+
+
+
+
