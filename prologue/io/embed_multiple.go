@@ -7,7 +7,6 @@ import (
 )
 
 //go:embed sample.json version.txt
-
 var static embed.FS
 
 func main() {
